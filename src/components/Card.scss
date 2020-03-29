@@ -1,0 +1,58 @@
+@import '../styles/vars';
+
+.Card {
+  background-color: white;
+  box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+  width: 90%;
+  border-radius: 3px;
+  padding-bottom: 0.5rem;
+  h2,
+  p,
+  figcaption,
+  footer {
+    padding: 0 1rem;
+    margin: 0;
+  }
+  figure {
+    overflow: hidden;
+    position: relative;
+    margin: 0;
+    padding-top: 100%;
+    img {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+    }
+  }
+  figcaption {
+    font-style: italic;
+    color: $color_text_light;
+    margin-top: 0.75rem;
+  }
+  & + .Card {
+    margin-top: 1.5rem;
+  }
+  header {
+    margin: 0.75rem 0;
+    a {
+      color: $color_text;
+      text-decoration: none;
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+      }
+    }
+    p {
+      color: $color_text_light;
+      line-height: 1.5rem;
+    }
+  }
+  footer {
+    color: $color_text_light;
+    line-height: 1.5rem;
+  }
+}

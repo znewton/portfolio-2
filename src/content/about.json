@@ -1,0 +1,36 @@
+{
+  "sections": [
+    {
+      "id": "bikes",
+      "img": {
+        "src": "/about/TorkerTrackStand2_CropSquare.jpg",
+        "alt": "Me, riding my favorite steel bike along Snoqualmie Valley Trail"
+      },
+      "header": "I &#10084; Bikes"
+    },
+    {
+      "id": "cooking",
+      "img": {
+        "src": "/about/Gyros_CropSquare.jpg",
+        "alt": "Gyros with homemade pita, homemade tzatziki, mushrooms, onion, and arugula"
+      },
+      "header": "Cooking is fun &#127859;"
+    },
+    {
+      "id": "outdoors",
+      "img": {
+        "src": "/about/ColoradoWithChloe1_CropSquare.jpg",
+        "alt": "Me and my girlfriend, Chloé, on our way to ski at Vail"
+      },
+      "header": "Outdoors > indoors &#9968;"
+    },
+    {
+      "id": "minnesota",
+      "img": {
+        "src": "/about/ScottyBangBrewing_CropSquare.jpg",
+        "alt": "Scotty telling a story and Dad cracking up at Bang Brewing in Minneapolis"
+      },
+      "header": "MN, born & raised &#10052;"
+    }
+  ]
+}

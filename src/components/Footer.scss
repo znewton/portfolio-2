@@ -1,0 +1,16 @@
+@import '../styles/vars';
+
+.Footer {
+  background-color: $color_bg_dark;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-bottom: 5rem;
+  address {
+    line-height: 1.5rem;
+  }
+  a {
+    color: $color_brand;
+  }
+}

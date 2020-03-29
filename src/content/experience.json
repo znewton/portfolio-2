@@ -1,0 +1,32 @@
+{
+  "sections": [
+    {
+      "id": "alaska_airlines",
+      "header": "Alaska Airlines &#9992;",
+      "subheader": "Software Development Engineer<br/>March 2019 &ndash; Present<br/>Seattle, WA",
+      "body": "",
+      "footer": ""
+    },
+    {
+      "id": "zendesk",
+      "header": "Zendesk &#127903;",
+      "subheader": "Software Engineering Intern<br/>May 2018 &ndash; August 2018<br/>San Francisco, CA",
+      "body": "",
+      "footer": ""
+    },
+    {
+      "id": "workiva",
+      "header": "Workiva &#128224;",
+      "subheader": "Software Engineering Intern<br/>May 2017 &ndash; February 2018<br/>Ames, IA",
+      "body": "",
+      "footer": ""
+    },
+    {
+      "id": "isu_webdev",
+      "header": "Iowa State Web Dev &#127891;",
+      "subheader": "Applications Developer<br/>February 2016 &ndash; May 2017<br/>Ames, IA",
+      "body": "",
+      "footer": ""
+    }
+  ]
+}
