@@ -7,6 +7,23 @@
   width: 90%;
   border-radius: 3px;
   padding-bottom: 0.5rem;
+
+  & + .Card {
+    margin-top: 1.5rem;
+  }
+  @media (min-width: $desktop_breakpoint) {
+    width: $desktop_breakpoint / 2 - 20px;
+    // flex-basis: $desktop_breakpoint / 2 - 20px;
+    margin-bottom: 1rem;
+
+    & + .Card {
+      margin-top: 0;
+    }
+    &:nth-of-type(odd) + .Card {
+      margin-left: 20px;
+    }
+  }
+
   h2,
   p,
   figcaption,
@@ -32,9 +49,6 @@
     font-style: italic;
     color: $color_text_light;
     margin-top: 0.75rem;
-  }
-  & + .Card {
-    margin-top: 1.5rem;
   }
   header {
     margin: 0.75rem 0;

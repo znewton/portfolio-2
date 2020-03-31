@@ -15,12 +15,14 @@ const HeaderLink = ({ href, children }) => {
 
 const Header = () => (
   <nav className={styles.Header}>
-    <HeaderLink href="/experience">Experience</HeaderLink>
-    <HeaderLink href="/">
-      <span>Zach</span>
-      <span>Newton</span>
-    </HeaderLink>
-    <HeaderLink href="/about">About</HeaderLink>
+    <div className={styles.HeaderContainer}>
+      <HeaderLink href="/experience">Experience</HeaderLink>
+      <HeaderLink href="/">
+        <span>Zach</span>
+        <span>Newton</span>
+      </HeaderLink>
+      <HeaderLink href="/about">About</HeaderLink>
+    </div>
   </nav>
 );
 

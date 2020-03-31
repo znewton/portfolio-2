@@ -16,6 +16,19 @@ main {
   flex-direction: column;
   align-items: center;
   padding-bottom: 2rem;
+
+  @media (min-width: $desktop_breakpoint) {
+    padding-top: 4rem;
+    width: $desktop_breakpoint;
+    margin: 0 auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    // min-height: unset;
+    align-content: flex-start;
+  }
+
   & > h1 {
     width: 90%;
   }

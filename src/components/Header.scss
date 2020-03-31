@@ -5,13 +5,16 @@
   bottom: 0;
   width: 100%;
   left: 0;
-  display: flex;
-  justify-content: center;
   background-color: white;
   box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
     0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
-  align-items: center;
   z-index: 1;
+
+  @media (min-width: $desktop_breakpoint) {
+    bottom: unset;
+    top: 0;
+  }
+
   a {
     font-size: 0.95rem;
     position: relative;
@@ -25,16 +28,6 @@
     &:hover {
       text-decoration: underline;
     }
-    &:not(:last-of-type)::after {
-      content: '';
-      display: block;
-      width: 1px;
-      top: 20%;
-      height: 60%;
-      position: absolute;
-      right: 0;
-      background-color: $color_text_light;
-    }
     &[href='/'] {
       font-size: 1rem;
       font-weight: 600;
@@ -46,5 +39,19 @@
     span {
       display: block;
     }
+  }
+}
+
+.HeaderContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: $desktop_breakpoint) {
+    bottom: unset;
+    top: 0;
+    width: $desktop_breakpoint;
+    margin: 0 auto;
   }
 }
