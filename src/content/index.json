@@ -1,3 +1,12 @@
 {
-  "bubbles": [{}, {}, {}, {}, {}, {}, {}, {}, {}]
+  "bubbles": [
+    { "icon": "\uf84b", "iconType": "Pro", "title": "Biking" },
+    { "icon": "\uf6bb", "iconType": "Pro", "title": "Camping" },
+    { "icon": "\uf3d3", "iconType": "Brands", "title": "NodeJs" },
+    { "icon": "\uf7ea", "iconType": "Pro", "title": "Coding" },
+    { "icon": "\uf841", "iconType": "Brands", "title": "Git" },
+    { "icon": "\uf38b", "iconType": "Brands", "title": "CSS" },
+    { "icon": "\uf13b", "iconType": "Brands", "title": "HTML" },
+    { "icon": "\uf3b9", "iconType": "Brands", "title": "JavaScript" }
+  ]
 }

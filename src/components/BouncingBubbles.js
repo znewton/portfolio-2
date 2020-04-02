@@ -127,15 +127,26 @@ const BouncingBubbles = ({ bubbleList = [] }) => {
       });
     };
     const renderBubbles = () => {
-      ctx.shadowColor = 'rgba(0,0,0,0.1)';
-      ctx.shadowBlur = 15;
-      ctx.shadowOffsetX = 3;
-      ctx.shadowOffsetY = 5;
-      ctx.fillStyle = 'white';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
       bubbles.forEach((bubble) => {
         ctx.beginPath();
+        ctx.fillStyle = 'white';
+        ctx.shadowColor = 'rgba(0,0,0,0.1)';
+        ctx.shadowBlur = 15;
+        ctx.shadowOffsetX = 3;
+        ctx.shadowOffsetY = 5;
         ctx.arc(bubble.pos.x, bubble.pos.y, bubble.radius, 0, 2 * Math.PI);
         ctx.fill();
+        ctx.shadowColor = 'rgba(0,0,0,0.05)';
+        ctx.shadowBlur = 5;
+        ctx.shadowOffsetX = 1;
+        ctx.shadowOffsetY = 2;
+        ctx.fillStyle = '#2e2e4b';
+        ctx.font = `${bubble.radius - 6}px "Font Awesome 5 ${
+          bubble.iconType || 'Pro'
+        }"`;
+        ctx.fillText(bubble.icon, bubble.pos.x, bubble.pos.y);
       });
     };
     const animate = () => {
