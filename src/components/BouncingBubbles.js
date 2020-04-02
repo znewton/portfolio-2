@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Vector from 'victor';
 import styles from './BouncingBubbles.scss';
 
@@ -8,6 +8,9 @@ const getBoundingBox = ({ pos, radius }) => ({
   right: pos.x + radius,
   left: pos.x - radius,
 });
+
+const detectBubbleCollision = (bubble1, bubble2) =>
+  bubble1.pos.distance(bubble2.pos) <= bubble1.radius + bubble2.radius;
 
 /**
  * Collision maths from https://en.wikipedia.org/wiki/Elastic_collision
@@ -55,14 +58,15 @@ const BouncingBubbles = ({ bubbleList = [] }) => {
     canvas.height = parseInt(parentComputedStyle.getPropertyValue('height'));
     const ctx = canvas.getContext('2d');
     let animationCallbackId;
-
-    const bubbles = bubbleList.map((bubble, i) => {
-      const radius = Math.floor(Math.random() * 20) + 30;
-      const pos = new Vector(0, 0);
-      pos.randomize(
+    const getRandomLocation = () =>
+      new Vector(0, 0).randomize(
         new Vector(0, 0),
         new Vector(canvas.offsetWidth, canvas.offsetHeight)
       );
+
+    const bubbles = bubbleList.map((bubble) => {
+      const radius = Math.floor(Math.random() * 20) + 30;
+      const pos = getRandomLocation();
       const vx = Math.random();
       const vy = 1 - vx;
       const vel = new Vector(
@@ -75,6 +79,14 @@ const BouncingBubbles = ({ bubbleList = [] }) => {
         vel,
         radius,
       };
+    });
+    bubbles.forEach((bubble1, i) => {
+      bubbles.forEach((bubble2, j) => {
+        if (i === j) return;
+        if (detectBubbleCollision(bubble1, bubble2)) {
+          bubble2.pos = getRandomLocation();
+        }
+      });
     });
 
     const applyWallCollisions = () => {
@@ -97,18 +109,15 @@ const BouncingBubbles = ({ bubbleList = [] }) => {
     };
     const applyBubbleCollisions = () => {
       const calcd = {};
-      for (let i = 0; i < bubbles.length; i++) {
-        const bubble1 = bubbles[i];
-        for (let j = 0; j < bubbles.length; j++) {
-          if (i === j || calcd[`${i},${j}`] || calcd[`${j},${i}`]) continue;
-          const bubble2 = bubbles[j];
-          const distance = bubble1.pos.distance(bubble2.pos);
-          if (distance < bubble1.radius + bubble2.radius) {
+      bubbles.forEach((bubble1, i) => {
+        bubbles.forEach((bubble2, j) => {
+          if (i === j || calcd[`${i},${j}`]) return;
+          if (detectBubbleCollision(bubble1, bubble2)) {
             applyVelocityOnCollision(bubble1, bubble2);
-            calcd[`${i},${j}`] = true;
+            calcd[`${j},${i}`] = true;
           }
-        }
-      }
+        });
+      });
     };
     const updateBubbles = () => {
       applyWallCollisions();
