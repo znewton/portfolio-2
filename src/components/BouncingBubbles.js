@@ -1,5 +1,47 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
+import Vector from 'victor';
 import styles from './BouncingBubbles.scss';
+
+const getBoundingBox = ({ pos, radius }) => ({
+  top: pos.y - radius,
+  bottom: pos.y + radius,
+  right: pos.x + radius,
+  left: pos.x - radius,
+});
+
+/**
+ * Collision maths from https://en.wikipedia.org/wiki/Elastic_collision
+ */
+const applyVelocityOnCollision = (bubble1, bubble2) => {
+  /**
+   * @type {Array<Vector>}
+   */
+  const [v1, v2, x1, x2] = [bubble1.vel, bubble2.vel, bubble1.pos, bubble2.pos];
+  const m1 = 1;
+  const m2 = 1;
+
+  bubble1.vel = v1.clone().subtract(
+    x1
+      .clone()
+      .subtract(x2.clone())
+      .multiplyScalar(
+        v1.clone().subtract(v2.clone()).dot(x1.clone().subtract(x2.clone())) /
+          Math.pow(x1.clone().subtract(x2.clone()).magnitude(), 2)
+      )
+      .multiplyScalar((2 * m2) / (m1 + m2))
+  );
+  bubble2.vel = v2.clone().subtract(
+    x2
+      .clone()
+      .subtract(x1.clone())
+      .multiplyScalar(
+        v2.clone().subtract(v1.clone()).dot(x2.clone().subtract(x1.clone())) /
+          Math.pow(x2.clone().subtract(x1.clone()).magnitude(), 2)
+      )
+      .multiplyScalar(1)
+      .multiplyScalar((2 * m1) / (m1 + m2))
+  );
+};
 
 const BouncingBubbles = ({ bubbleList = [] }) => {
   const canvasRef = useRef();
@@ -13,41 +55,66 @@ const BouncingBubbles = ({ bubbleList = [] }) => {
     canvas.height = parseInt(parentComputedStyle.getPropertyValue('height'));
     const ctx = canvas.getContext('2d');
     let animationCallbackId;
-    const bubbles = bubbleList.map((bubble) => ({
-      ...bubble,
-      x: Math.floor(Math.random() * canvas.offsetWidth),
-      y: Math.floor(Math.random() * canvas.offsetHeight),
-      xVel: Math.random() < 0.5 ? 1 : -1,
-      yVel: Math.random() < 0.5 ? 1 : -1,
-      radius: Math.floor(Math.random() * 20) + 30,
-    }));
-    const checkCollision = (bubble) => {
-      let [left, top, right, bottom] = [0, 0, 0, 0];
-      if (bubble.x + bubble.radius >= canvas.width) {
-        right = 1;
+
+    const bubbles = bubbleList.map((bubble, i) => {
+      const radius = Math.floor(Math.random() * 20) + 30;
+      const pos = new Vector(0, 0);
+      pos.randomize(
+        new Vector(0, 0),
+        new Vector(canvas.offsetWidth, canvas.offsetHeight)
+      );
+      const vx = Math.random();
+      const vy = 1 - vx;
+      const vel = new Vector(
+        vx * (Math.random() > 0.5 ? 1 : -1),
+        vy * (Math.random() > 0.5 ? 1 : -1)
+      );
+      return {
+        ...bubble,
+        pos,
+        vel,
+        radius,
+      };
+    });
+
+    const applyWallCollisions = () => {
+      for (let i = 0; i < bubbles.length; i++) {
+        const bubble = bubbles[i];
+        const { top, right, left, bottom } = getBoundingBox(bubble);
+        if (
+          (right >= canvas.width && bubble.vel.x > 0) ||
+          (left <= 0 && bubble.vel.x < 0)
+        ) {
+          bubble.vel.invertX();
+        }
+        if (
+          (bottom >= canvas.height && bubble.vel.y > 0) ||
+          (top <= 0 && bubble.vel.y < 0)
+        ) {
+          bubble.vel.invertY();
+        }
       }
-      if (bubble.x - bubble.radius <= 0) {
-        left = 1;
+    };
+    const applyBubbleCollisions = () => {
+      const calcd = {};
+      for (let i = 0; i < bubbles.length; i++) {
+        const bubble1 = bubbles[i];
+        for (let j = 0; j < bubbles.length; j++) {
+          if (i === j || calcd[`${i},${j}`] || calcd[`${j},${i}`]) continue;
+          const bubble2 = bubbles[j];
+          const distance = bubble1.pos.distance(bubble2.pos);
+          if (distance < bubble1.radius + bubble2.radius) {
+            applyVelocityOnCollision(bubble1, bubble2);
+            calcd[`${i},${j}`] = true;
+          }
+        }
       }
-      if (bubble.y + bubble.radius >= canvas.height) {
-        bottom = 1;
-      }
-      if (bubble.y - bubble.radius <= 0) {
-        top = 1;
-      }
-      return { top, left, right, bottom };
     };
     const updateBubbles = () => {
+      applyWallCollisions();
+      applyBubbleCollisions();
       bubbles.forEach((bubble) => {
-        const collision = checkCollision(bubble);
-        if (collision.left || collision.right) {
-          bubble.xVel = -1 * bubble.xVel;
-        }
-        if (collision.top || collision.bottom) {
-          bubble.yVel = -1 * bubble.yVel;
-        }
-        bubble.x += bubble.xVel;
-        bubble.y += bubble.yVel;
+        bubble.pos.add(bubble.vel);
       });
     };
     const renderBubbles = () => {
@@ -58,7 +125,7 @@ const BouncingBubbles = ({ bubbleList = [] }) => {
       ctx.fillStyle = 'white';
       bubbles.forEach((bubble) => {
         ctx.beginPath();
-        ctx.arc(bubble.x, bubble.y, bubble.radius, 0, 2 * Math.PI);
+        ctx.arc(bubble.pos.x, bubble.pos.y, bubble.radius, 0, 2 * Math.PI);
         ctx.fill();
       });
     };
@@ -78,6 +145,7 @@ const BouncingBubbles = ({ bubbleList = [] }) => {
       window.cancelAnimationFrame(animationCallbackId);
     };
   }, [canvasRef]);
+
   return <canvas ref={canvasRef} className={styles.BouncingBubbles} />;
 };
 
