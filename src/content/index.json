@@ -1,12 +1,20 @@
 {
   "bubbles": [
     { "icon": "\uf84b", "iconType": "Pro", "title": "Biking" },
-    { "icon": "\uf6bb", "iconType": "Pro", "title": "Camping" },
+    { "icon": "\uf3b9", "iconType": "Brands", "title": "JavaScript" },
+    { "icon": "\uf41b", "iconType": "Brands", "title": "React" },
     { "icon": "\uf3d3", "iconType": "Brands", "title": "NodeJs" },
-    { "icon": "\uf7ea", "iconType": "Pro", "title": "Coding" },
     { "icon": "\uf841", "iconType": "Brands", "title": "Git" },
+    { "icon": "\uf7ea", "iconType": "Pro", "title": "Coding" },
+    { "icon": "\uf6bb", "iconType": "Pro", "title": "Camping" },
+    { "icon": "\uf86b", "iconType": "Pro", "title": "Cooking" },
+    { "icon": "\uf02d", "iconType": "Pro", "title": "Reading" },
+    { "icon": "\uf6fc", "iconType": "Pro", "title": "Climbing" },
+    { "icon": "\uf7c9", "iconType": "Pro", "title": "Skiing" },
     { "icon": "\uf38b", "iconType": "Brands", "title": "CSS" },
     { "icon": "\uf13b", "iconType": "Brands", "title": "HTML" },
-    { "icon": "\uf3b9", "iconType": "Brands", "title": "JavaScript" }
+    { "icon": "\uf17a", "iconType": "Brands", "title": "Windows" },
+    { "icon": "\uf17c", "iconType": "Brands", "title": "Linux" },
+    { "icon": "\uf6cf", "iconType": "Pro", "title": "Tabletop Games" }
   ]
 }

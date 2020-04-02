@@ -20,8 +20,8 @@ const applyVelocityOnCollision = (bubble1, bubble2) => {
    * @type {Array<Vector>}
    */
   const [v1, v2, x1, x2] = [bubble1.vel, bubble2.vel, bubble1.pos, bubble2.pos];
-  const m1 = 1;
-  const m2 = 1;
+  const m1 = bubble1.radius;
+  const m2 = bubble2.radius;
 
   bubble1.vel = v1.clone().subtract(
     x1
@@ -63,9 +63,10 @@ const BouncingBubbles = ({ bubbleList = [] }) => {
         new Vector(0, 0),
         new Vector(canvas.offsetWidth, canvas.offsetHeight)
       );
-
-    const bubbles = bubbleList.map((bubble) => {
-      const radius = Math.floor(Math.random() * 20) + 30;
+    const numBubbles = bubbleList.length;
+    const bubbles = bubbleList.map((bubble, i) => {
+      const radius = 30 + numBubbles - i;
+      console.log(bubble, i);
       const pos = getRandomLocation();
       const vx = Math.random();
       const vy = 1 - vx;
