@@ -1,7 +1,46 @@
+@import '../styles/vars';
 .BouncingBubbles {
   background-color: transparent;
   position: relative;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
+}
+.BubblePopover {
+  background: $color_text;
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 3px;
+  box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+  & > .BubblePopover__arrow,
+  & > .BubblePopover__arrow::before {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    z-index: 1;
+  }
+  & > .BubblePopover__arrow::before {
+    content: '';
+    transform: rotate(45deg);
+    background: $color_text;
+  }
+  &[data-popper-placement^='top'] > .BubblePopover__arrow {
+    bottom: -4px;
+  }
+  &[data-popper-placement^='bottom'] > .BubblePopover__arrow {
+    top: -4px;
+  }
+  &[data-popper-placement^='left'] > .BubblePopover__arrow {
+    right: -4px;
+  }
+  &[data-popper-placement^='right'] > .BubblePopover__arrow {
+    left: -4px;
+  }
+}
+.Pseudobubble {
+  z-index: -1;
+  pointer-events: none;
+  position: absolute;
+  box-sizing: border-box;
 }
